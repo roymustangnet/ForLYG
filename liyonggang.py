@@ -3,24 +3,27 @@ from itertools import combinations
 from itertools import product
 
 def main():
-	(list1, list2, flag) = user_input()
-	r1 = get_combinations(list1)
-	r2 = get_combinations(list2);
-	intersection_set = intersection(r1, r2, flag)
-	if not intersection_set:
-		print("The result is empty.")
-		return
-	for i in intersection_set:
-		print(i)
+	result = user_input()
+	if(result and len(result) == 3):
+		r1 = get_combinations(result[0])
+		r2 = get_combinations(result[1]);
+		intersection_set = intersection(r1, r2, result[2])
+		if not intersection_set:
+			print("The result is empty.")
+			return
+		for i in intersection_set:
+			print(i)
+	else:
+		print("There are something wrong with input. Please check them.")
 
 
 def user_input():
 	list1 = user_input_for_group(1)
 	if not check_inputs(list1):
-		return (None, None, None)
+		return False
 	list2 = user_input_for_group(2)
 	if not check_inputs(list2):
-		return (None, None, None)
+		return False
 	# list1 = [
 	# 	[i for i in range(1, 8)],
 	# 	[i for i in range(8, 15)],
@@ -39,6 +42,9 @@ def user_input():
 	print("flag = 2 means there don't have any neighbour in the list")
 	flag = input("What do you want(0,1,2):")
 	flag = int(flag)
+	if not (flag in [0, 1, 2]):
+		print("flag must be 0, 1 or 2")
+		return False
 
 	return (list1, list2, flag)
 
