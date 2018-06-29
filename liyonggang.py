@@ -3,10 +3,10 @@ from itertools import combinations
 from itertools import product
 
 def main():
-	list1 = user_input_for group(1)
+	list1 = user_input_for(1)
 	if not check_inputs(list1):
 		return
-	list2 = user_input_for group(2)
+	list2 = user_input_for(2)
 	if not check_inputs(list2):
 		return
 
@@ -25,12 +25,12 @@ def main():
 		print(i)
 
 
-def user_input_for group(group):
+def user_input_for(group):
 	# process user input for each group
 	# there are two group
 	input_lists = []
 	for i in range(1,5):
-		user_input = input("Input " + str(group) + "." + str(i) + ":")
+		user_input = input("Input %d.%d:"%(group, i))
 		input_list = [int(integer) for integer in user_input.split()]
 		length = len(input_list)
 		if((length == 7 and i < 4) or (length == 14 and i == 4)):
@@ -87,7 +87,7 @@ def check_inputs(input_lists):
 		try:
 			standard_list.remove(i)
 		except Exception as e:
-			print("There have more "+ str(i)+".")
+			print("There have more %d."%i)
 			return False
 	if(standard_list):
 		print(standard_list)
