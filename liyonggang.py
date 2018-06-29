@@ -3,14 +3,36 @@ from itertools import combinations
 from itertools import product
 
 def main():
-	list1 = user_input_for(1)
+	(list1, list2, flag) = user_input()
+	r1 = get_combinations(list1)
+	r2 = get_combinations(list2);
+	intersection_set = intersection(r1, r2, flag)
+	if not intersection_set:
+		print("The result is empty.")
+		return
+	for i in intersection_set:
+		print(i)
+
+
+def user_input():
+	list1 = user_input_for_group(1)
 	if not check_inputs(list1):
-		return
-	list2 = user_input_for(2)
+		return (None, None, None)
+	list2 = user_input_for_group(2)
 	if not check_inputs(list2):
-		return
-
-
+		return (None, None, None)
+	# list1 = [
+	# 	[i for i in range(1, 8)],
+	# 	[i for i in range(8, 15)],
+	# 	[i for i in range(15, 22)],
+	# 	[i for i in range(22, 35)],
+	# ]
+	# list2 = [
+	# 	[i for i in range(1, 15, 2)],
+	# 	[i for i in range(2, 15, 2)],
+	# 	[i for i in range(15, 22)],
+	# 	[i for i in range(22, 35)],
+	# ]
 	print("Please input flag:")
 	print("flag = 0 means no condition")
 	print("flag = 1 means there have only one neighbour in the list")
@@ -18,14 +40,9 @@ def main():
 	flag = input("What do you want(0,1,2):")
 	flag = int(flag)
 
-	r1 = get_combinations(list1)
-	r2 = get_combinations(list2);
+	return (list1, list2, flag)
 
-	for i in intersection(r1, r2, flag):
-		print(i)
-
-
-def user_input_for(group):
+def user_input_for_group(group):
 	# process user input for each group
 	# there are two group
 	input_lists = []
