@@ -3,44 +3,44 @@ from itertools import combinations
 from itertools import product
 
 def main():
-	input_list1 = input("Input 1.1:")
-	input_list2 = input("Input 1.2:")
-	input_list3 = input("Input 1.3:")
-	input_list4 = input("Input 1.4:")
-
-	l1 = [int(i) for i in input_list1.split()]
-	l2 = [int(i) for i in input_list2.split()]
-	l3 = [int(i) for i in input_list3.split()]
-	l4 = [int(i) for i in input_list4.split()]
-
-	input_list1 = input("Input 2.1:")
-	input_list2 = input("Input 2.2:")
-	input_list3 = input("Input 2.3:")
-	input_list4 = input("Input 2.4:")
-
-	ll1 = [int(i) for i in input_list1.split()]
-	ll2 = [int(i) for i in input_list2.split()]
-	ll3 = [int(i) for i in input_list3.split()]
-	ll4 = [int(i) for i in input_list4.split()]
+	list1 = user_input(1)
+	if not check_inputs(list1):
+		return
+	list2 = user_input(2)
+	if not check_inputs(list2):
+		return
 
 
-	print("Please input flag(0, 1, 2)")
+	print("Please input flag:")
 	print("flag = 0 means no condition")
 	print("flag = 1 means there have only one neighbour in the list")
 	print("flag = 2 means there don't have any neighbour in the list")
-	flag = input("What do you want:")
+	flag = input("What do you want(0,1,2):")
 	flag = int(flag)
 
-	r1 = get_combinations(l1, l2, l3, l4)
-	r2 = get_combinations(ll1, ll2, ll3, ll4);
+	r1 = get_combinations(list1)
+	r2 = get_combinations(list2);
 
 	for i in intersection(r1, r2, flag):
 		print(i)
 
 
-def get_combinations(list1, list2, list3, list4):
+def user_input(group):
+	input_lists = []
+	for i in range(1,5):
+		user_input = input("Input " + str(group) + "." + str(i) + ":")
+		input_list = [int(integer) for integer in user_input.split()]
+		length = len(input_list)
+		if((length == 7 and i < 4) or (length == 14 and i == 4)):
+			input_lists.append(input_list)
+		else:
+			print("The length of input is not right.")
+			return None
+	return input_lists
+
+def get_combinations(l):
 	# the count of list4 is 14, so select 2 number for it
-	r = list(product(list1, list2, list3, combinations(list4,2)))
+	r = list(product(l[0], l[1], l[2], combinations(l[3],2)))
 	r1 = [ {*item[:3], *item[-1]} for item in r ]
 	return r1
 
@@ -71,6 +71,20 @@ def neighbour_count(input_list):
 		last = current
 	return count
 
+def check_inputs(input_lists):
+	standard_list = [i for i in range(1,36)]
+	test_list = []
+	[test_list.extend(i) for i in input_lists]
+	for i in test_list:
+		try:
+			standard_list.remove(i)
+		except Exception as e:
+			print("There have more "+ str(i)+".")
+			return False
+	if(standard_list):
+		print(standard_list)
+		return False
+	return True
 
 if __name__ == '__main__':
 	main()
