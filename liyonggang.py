@@ -3,10 +3,10 @@ from itertools import combinations
 from itertools import product
 
 def main():
-	list1 = user_input(1)
+	list1 = user_input_for group(1)
 	if not check_inputs(list1):
 		return
-	list2 = user_input(2)
+	list2 = user_input_for group(2)
 	if not check_inputs(list2):
 		return
 
@@ -25,7 +25,9 @@ def main():
 		print(i)
 
 
-def user_input(group):
+def user_input_for group(group):
+	# process user input for each group
+	# there are two group
 	input_lists = []
 	for i in range(1,5):
 		user_input = input("Input " + str(group) + "." + str(i) + ":")
@@ -60,6 +62,9 @@ def intersection(comb1, comb2, flag = 0):
 
 
 def neighbour_count(input_list):
+	# 一个数组中有多少个数字是相邻的
+	# 例如：
+	# [9,1,3,4,10] 相邻数为2，因为3和4相邻，9和10相邻
 	input_list = list(input_list)
 	input_list.sort()
 	is_no_neighbour = True
@@ -72,6 +77,9 @@ def neighbour_count(input_list):
 	return count
 
 def check_inputs(input_lists):
+	# 检查输入，判断是否所有的输入是否都包含了1-35
+	if(not input_lists):
+		return False
 	standard_list = [i for i in range(1,36)]
 	test_list = []
 	[test_list.extend(i) for i in input_lists]
