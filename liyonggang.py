@@ -1,7 +1,7 @@
 # coding:utf-8
 from itertools import combinations
 from itertools import product
-
+import csv
 def main():
 	result = user_input()
 	if(result and len(result) == 3):
@@ -13,15 +13,28 @@ def main():
 			return
 		for i in intersection_set:
 			print(i)
+		write_csv(intersection_set)
 	else:
 		print("There are something wrong with input. Please check them.")
 
 
 def user_input():
-	list1 = user_input_for_group(1)
+	# list1 = user_input_for_group(1)
+	list1 = [
+		[4, 11, 14, 15, 22, 27, 35],
+		[2, 8, 10, 16, 21, 31, 33],
+		[5, 13, 17, 19, 23, 24, 25],
+		[1, 3, 6, 7, 9, 12, 18, 20, 28, 29, 30, 32, 34, 26]
+	]
 	if not check_inputs(list1):
 		return False
-	list2 = user_input_for_group(2)
+	list2 = [
+		[3, 10, 12, 32, 5, 18, 25],
+		[28, 29, 31, 1, 2, 23, 35],
+		[4, 9, 19, 21, 27, 30, 11],
+		[6, 7, 8, 13, 14, 15, 16, 17, 20, 22, 24, 26, 33, 34]
+	]
+	# list2 = user_input_for_group(2)
 	if not check_inputs(list2):
 		return False
 	# list1 = [
@@ -53,7 +66,7 @@ def user_input_for_group(group):
 	# there are two group
 	input_lists = []
 	for i in range(1,5):
-		user_input = input("Input %d.%d:"%(group, i))
+		user_input = input(f"Input {group}.{i}:")
 		input_list = [int(integer) for integer in user_input.split()]
 		length = len(input_list)
 		if((length == 7 and i < 4) or (length == 14 and i == 4)):
@@ -110,15 +123,15 @@ def check_inputs(input_lists):
 		try:
 			standard_list.remove(i)
 		except Exception as e:
-			print("There have more %d."%i)
+			print(f"There have more {i}.")
 			return False
 	if(standard_list):
 		print(standard_list)
 		return False
 	return True
-
+def write_csv(data):
+	with open('result.csv', 'w') as f:
+	    writer = csv.writer(f)
+	    writer.writerows(data)
 if __name__ == '__main__':
 	main()
-
-
-
